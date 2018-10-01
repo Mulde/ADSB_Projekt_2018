@@ -79,48 +79,81 @@ colormap gray
 title('brik 9')
 
 %% removing brik 1 from the original image
-% x = 230;
-% X = 344;
-% scx = x:X;
-% y = 180;
-% Y = 271;
-% scy = y:Y;
-
-% hvidx = 0;
-% hvidX = 344;
-% hvidxs = hvidx:hvidX;
-% hvidy = 0;
-% hvidY = 271;
-% hvidys = hvidy:hvidY;
-% 
-% % sect = img(scx,scy);
-% hvid = img(hvidy:hvidY);
-% kimg = img;
-% % kimg(scx,scy) = White;
-% kimg(hvidxs,hvidys)= White;
 kimg(344,271) = 1;
-figure 
-imshow(kimg);
+% figure 
+%%imshow(kimg);
 
-%% trying to find the location in the picture
+%% trying to find the location in the picture using the cross correlation
 % subtracting the mean value of the image so that there are roughly
 % equal parts negative and positive values
 nimg = img-mean(mean(img));
-% brik_1 = im2double(brik_1);
-
-crr = xcorr2(nimg,brik_1);
+brik = brik_1;
+crr = normxcorr2(brik,nimg);
 [ssr,snd] = max(crr(:));
 [ij,ji] = ind2sub(size(crr),snd);
-
+% plot of the cross correlation
 figure
+subplot(1,2,1)
 plot(crr(:))
 title('Cross-Correlation')
 hold on 
 plot(snd,ssr,'or')
 hold off
 text(snd*1.05,ssr,'maximum')
+subplot(1,2,2)
+surf(crr)
+shading flat
+kimg(ij:-1:ij-size(brik,1)+1,ji:-1:ji-size(brik,2)+1) = rot90(brik,2);
 
-kimg(ij:-1:ij-size(brik_1,1)+1,ji:-1:ji-size(brik_1,2)+1) = rot90(brik_1,2);
+%% placing brick 2
+brik = brik_2;
+% find teori omkring denne funktion da xcorr2 ikke virkede men det gør
+% gør denne 
+crr = normxcorr2(brik,nimg);
+crr2 = xcorr2(nimg,brik);
+[ssr,snd] = max(crr(:));
+[ij,ji] = ind2sub(size(crr),snd);
+% plot of the cross correlation
+figure
+subplot(2,2,1)
+plot(crr(:))
+title('Cross-Correlation')
+hold on 
+plot(snd,ssr,'or')
+hold off
+text(snd*1.05,ssr,'maximum')
+subplot(2,2,2)
+surf(crr)
+shading flat
+% plot xcorr2
+subplot(2,2,4)
+surf(crr2)
+subplot(2,2,3)
+plot(crr2(:))
+shading flat
+kimg(ij:-1:ij-size(brik,1)+1,ji:-1:ji-size(brik,2)+1) = rot90(brik,2);
+
+%% placing brik 3
+brik = brik_3;
+crr = normxcorr2(brik,nimg);
+[ssr,snd] = max(crr(:));
+[ij,ji] = ind2sub(size(crr),snd);
+% plot of the cross correlation
+figure
+subplot(1,2,1)
+plot(crr(:))
+title('Cross-Correlation')
+hold on 
+plot(snd,ssr,'or')
+hold off
+text(snd*1.05,ssr,'maximum')
+subplot(1,2,2)
+surf(crr)
+shading flat
+kimg(ij:-1:ij-size(brik,1)+1,ji:-1:ji-size(brik,2)+1) = rot90(brik,2);
+
+%% putting in the brick into where it need to go
+% kimg(ij:-1:ij-size(brik_1,1)+1,ji:-1:ji-size(brik_1,2)+1) = rot90(brik_1,2);
 figure
 imagesc(kimg)
 axis image off
