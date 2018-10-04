@@ -127,6 +127,6 @@ axis image off
 colormap gray
 title('Reconstructed')
 
-
+imtool(img);
 
 

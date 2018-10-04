@@ -13,7 +13,9 @@ title('Mask 1x1');
 
 D = xcorr2(I,M);% cross corelate the matrix whit the mask
 subplot(3,2,5);
-stem3(D);
+surf (D);
+
+%stem3(D);
 
 I2 = zeros (10);
 I2(4:6,7:8) = 1;
@@ -28,7 +30,14 @@ title('Mask 2x2');
 
 D2 = xcorr2(I2,M2);
 subplot (3,2,6);
-stem3(D2);
-title('xcorr2 ');
+surf (D2);
+title('xcorr2');
 
-%surf (X,Y,Z,CO)
+[x,y] = max(D2(:));
+
+[X,Y] =ind2sub (size(D2),y);
+%% surf plot
+%figure
+%sz = size(D2);
+%[X,Y] = meshgrid(0:sz(1,1)-1,0:sz(1,2)-1);
+%surf (X,Y,D2)
