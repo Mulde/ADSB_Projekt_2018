@@ -16,7 +16,7 @@ figure
 imshow(brik_1)
 title('brikken')
 
-%% removing brik 1 from the original image
+%% creating blank size of the original img for brick placement
 [x,y,z] = size(img);
 kimg(x,y) = 1;
 % figure 

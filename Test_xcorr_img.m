@@ -87,7 +87,7 @@ kimg(344,271) = 1;
 % subtracting the mean value of the image so that there are roughly
 % equal parts negative and positive values
 nimg = img-mean(mean(img));
-brik = brik_1;
+brik = brik_9;
 crr = normxcorr2(brik,nimg);
 [ssr,snd] = max(crr(:));
 [ij,ji] = ind2sub(size(crr),snd);
@@ -153,13 +153,13 @@ shading flat
 kimg(ij:-1:ij-size(brik,1)+1,ji:-1:ji-size(brik,2)+1) = rot90(brik,2);
 
 %% putting in the brick into where it need to go
-% kimg(ij:-1:ij-size(brik_1,1)+1,ji:-1:ji-size(brik_1,2)+1) = rot90(brik_1,2);
+
 figure
 imagesc(kimg)
 axis image off
 colormap gray
 title('Reconstructed')
 
-imtool(img);
+%imtool(img);
 
 
