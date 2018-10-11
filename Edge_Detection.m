@@ -32,7 +32,7 @@ clear; close all; clc
 % imshow (f);
 % title(['Treshold = ' num2str(T)]); % disp a variable
 
-%%
+%% Subtracting the Background
 figure
 Back = imread ('White_Back.JPEG');
 Back = im2double(Back);
