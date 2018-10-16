@@ -5,7 +5,7 @@ clear; close all; clc
 figure
 Back = imread ('hvid_baggrund.jpg');
 Back = im2double(Back);
-Front = imread ('brik 3 reel.jpg');
+Front = imread ('brik 2 reel.jpg');
 Front = im2double(Front);
 
 diffImage = Front - Back;
@@ -21,14 +21,14 @@ imshow (mask);
 % use the mask to mark the changed area in the picture.
 subplot (1,2,2);
 box = regionprops(mask,'Area', 'BoundingBox'); 
-box(1);
 % Boundingbox [left, top, width, height]
 
 rect = box(1).BoundingBox;
+% Boundingbox [left, top, width, height]
+rect = [rect(1)+45 rect(2)+45 rect(3)-90 rect(4)-90];
+
 piece1 = imcrop (Front,rect);
-
 imshow (piece1);
-
 
 %% 2D cross corlation
 
@@ -45,7 +45,7 @@ brik = im2double(brik);
 crr = normxcorr2(brik,nref);
 
 [ssr,snd] = max(crr(:));
-[ij,ji] = ind2sub(size(crr),snd);
+[I,J] = ind2sub(size(nref),snd);
 
 % plot of the cross correlation
 figure
@@ -60,13 +60,13 @@ subplot(1,2,2)
 surf(crr)
 shading flat
 
-kimg(ij:-1:ij-size(brik,1)+1,ji:-1:ji-size(brik,2)+1) = rot90(brik,2);
+kimg(I:-1:I-size(brik,1)+1,J:-1:J-size(brik,2)+1) = rot90(brik,2);
 %% Show Placement
 figure
 imagesc(Original)
 hold on 
 [w,h] = size(brik);
-rectangle ('position',[ij ji w h],'EdgeColor','r')
+rectangle ('position',[I J w h],'EdgeColor','r')
 axis image off
 colormap gray
 title('Show Piece placement')
