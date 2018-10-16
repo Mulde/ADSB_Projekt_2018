@@ -48,7 +48,7 @@ mask = any (mask,3);
 
 subplot (1,3,1);
 mask = all(mask,3);
-imshow (mask);
+imshow ( mask);
 
 % use the mask to mark the changed area in the picture.
 subplot (1,3,2);
