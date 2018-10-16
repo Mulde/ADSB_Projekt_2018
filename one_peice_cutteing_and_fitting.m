@@ -5,7 +5,7 @@ clear; close all; clc
 figure
 Back = imread ('hvid_baggrund.jpg');
 Back = im2double(Back);
-Front = imread ('brik 2 reel.jpg');
+Front = imread ('brik 1 reel.jpg');
 Front = im2double(Front);
 
 diffImage = Front - Back;
@@ -32,7 +32,7 @@ imshow (piece1);
 
 %% 2D cross corlation
 
-Original = imread('med sort baggrund.jpg'); 
+Original = imread('med hvid baggrund.jpg'); 
 ref = rgb2gray(Original); 
 ref = im2double(ref);
 
@@ -45,8 +45,9 @@ brik = im2double(brik);
 crr = normxcorr2(brik,nref);
 
 [ssr,snd] = max(crr(:));
-[I,J] = ind2sub(size(nref),snd);
-
+siz = size(Original);
+[I,J] = ind2sub(siz,snd);
+%I = 2048-I;
 % plot of the cross correlation
 figure
 subplot(1,2,1)
