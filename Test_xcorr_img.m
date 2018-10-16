@@ -87,7 +87,7 @@ kimg(344,271) = 1;
 % subtracting the mean value of the image so that there are roughly
 % equal parts negative and positive values
 nimg = img-mean(mean(img));
-brik = brik_9;
+brik = brik_2;
 crr = normxcorr2(brik,nimg);
 [ssr,snd] = max(crr(:));
 [ij,ji] = ind2sub(size(crr),snd);
