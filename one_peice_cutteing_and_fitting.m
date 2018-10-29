@@ -4,16 +4,18 @@ clear; close all; clc
 %% Subtracting the Background
 figure
 %Load in white back
-Back = imread ('hvid_baggrund.jpg');
+Back = imread ('Back1.jpg');
 % Convert to Double data type
 Back = im2double(Back);
-Front = imread ('brik 1 reel.jpg');
+Front = imread ('Ref1 - Brik1.jpg');
 Front = im2double(Front);
 
 %subtract the forground from the backround
 diffImage = Front - Back;
 % finding the highest values over a certain threshold
-Threshold = 0.35;
+Threshold = 0.05;
+imhist(diffImage)
+figure
 mask = abs(diffImage) > Threshold;
 % Convert to Double data type
 mask = im2double(mask);
@@ -28,7 +30,16 @@ imshow (mask);
 subplot (1,2,2);
 box = regionprops(mask,'Area', 'BoundingBox'); 
 % cutting the image to fit the size of the mask from values in boundingbox
-rect = box(1).BoundingBox;
+i = 1;
+n = length(box)+1;
+while i < n    
+        if box(i).Area > 16000
+            brik_i = box(i);
+        end
+    i = i+1;    
+end
+
+rect = brik_i(1).BoundingBox;
 % Boundingbox [left, top, width, height]
 
 % creating square from values in the image and cutting away the white parts
@@ -41,7 +52,7 @@ imshow (piece1);
 %% 2D cross corlation
 
 % loading in the image of the puzzle
-Original = imread('med hvid baggrund.jpg');
+Original = imread('Ref1.jpg');
 
 % converting to grayscale
 ref = rgb2gray(Original); 
@@ -56,7 +67,6 @@ nref = ref-mean(mean(ref));
 brik = piece1;
 brik = rgb2gray(brik);
 brik = im2double(brik);
-
 % taking the cross correlation of the piece found earlier with the negative
 % of the full puzzle
 crr = normxcorr2(brik,nref);
