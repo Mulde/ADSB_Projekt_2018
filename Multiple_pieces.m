@@ -1,6 +1,10 @@
 %% one peice cutteing and fitting
 clear; close all; clc
 
+%% Global variables
+% the minimum pixle size of a piece 
+A = 16000;
+
 %% Subtracting the Background
 figure
 %Load in white back
@@ -44,6 +48,19 @@ ref = im2double(ref);
 nref = ref-mean(mean(ref));
 
 figure
+subplot (1,2,1);
+i = 1;
+m = 1;
+n = length(box)+1;
+while i < n
+        if box(i).Area > A
+            
+            Position = [1+(150*(m-1)) 1];
+            Original = insertText(Original,Position,m,'FontSize',60);
+            m = m + 1;
+        end
+    i = i+1;
+end
 % showing the image with scaled colors
 imagesc(Original)
 axis image off
@@ -52,10 +69,10 @@ title('Show Piece placement')
 
 i = 1;
 m = 1;
-n = length(box)+1;
+
 
 while i < n    
-        if box(i).Area > 16000
+        if box(i).Area > A
             brik = box(i);
             % cutting the image to fit the size of the mask from values in boundingbox
             rect(:,m) = brik(1).BoundingBox;
@@ -91,7 +108,17 @@ while i < n
             Y_offset = Y-size(brik,1);
             X_offset = X-size(brik,2);
             
-            hold on 
+            hold on
+            p1 = [35+(150*(i-1)) 110];                  % First Point
+            p2 = [X+1+(w/2) Y+1];                       % Second Point
+            dp = p2-p1;                                 % Difference
+            % Points from nomeric value to piece placement
+            quiver(p1(1),p1(2),dp(1),dp(2),0,'k','LineWidth',1.5);
+            
+            % numerate the Front image
+            Position = [rect(1,m)-120 rect(2,m)];
+            Front = insertText(Front,Position,m,'FontSize',60);
+            
             % drawing a rectangle where the piece is suppossed to go
             rectangle ('position',[X+1 Y+1 w h],'EdgeColor','r')
             
@@ -100,3 +127,6 @@ while i < n
         end
     i = i+1;    
 end
+
+subplot (1,2,2);
+imshow (Front);

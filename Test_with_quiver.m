@@ -106,13 +106,34 @@ shading flat
 
 %% Show Placement
 figure
+
+
+i = 1;
+m = 10;
+while i <= m    
+    Position = [1+(150*(i-1)) 1];
+    Original = insertText(Original,Position,i,'FontSize',60);
+    i = i+1;    
+end
+
 % showing the image with scaled colors
-Position = [1 1];
-Original = insertText(Original,Position,1,'FontSize',60);
 imagesc(Original)
-hold on 
-% pointing from the placement of the text to the middle of the piece
-quiver(35, 110, X+1+(w/2), Y+1+(h/2)); 
+
+i = 1;
+while i <= m    
+    hold on 
+    % pointing from the placement of the text to the middle of the piece
+    
+    
+    p1 = [35+(150*(i-1)) 110];                  % First Point
+    p2 = [X+1+(w/2) Y+1];                       % Second Point
+    dp = p2-p1;                                 % Difference
+    quiver(p1(1),p1(2),dp(1),dp(2),0);
+     
+    i = i+1;    
+end
+
+
 % drawing a rectangle where the piece is suppossed to go
 rectangle ('position',[X+1 Y+1 w h],'EdgeColor','r')
 axis image off
