@@ -11,7 +11,7 @@ figure
 Back = imread ('Back1.jpg');
 % Convert to Double data type
 Back = im2double(Back);
-Front = imread ('Multiple_pieces.jpg');
+Front = imread ('Multiple_pieces_2.jpg');
 Front = im2double(Front);
 
 %subtract the forground from the backround
