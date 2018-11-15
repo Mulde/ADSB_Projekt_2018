@@ -6,7 +6,6 @@ clear; close all; clc
 A = 16000;
 
 %% Subtracting the Background
-figure
 %Load in white back
 Back = imread ('Back1.jpg');
 % Convert to Double data type
@@ -18,8 +17,14 @@ Front = im2double(Front);
 diffImage = Front - Back;
 % finding the highest values over a certain threshold
 Threshold = 0.05;
-imhist(diffImage)
+
 figure
+subplot(1,2,1);
+imhist(diffImage)
+subplot(1,2,2);
+imhist(Front);
+
+
 mask = abs(diffImage) > Threshold;
 % Convert to Double data type
 mask = im2double(mask);
@@ -27,6 +32,7 @@ mask = im2double(mask);
 mask = any (mask,3);
 %plotting the results
 mask = all(mask,3);
+figure
 imshow (mask);
 
 % use the mask to mark the changed area in the picture.
@@ -67,7 +73,6 @@ title('Show Piece placement')
 
 i = 1;
 m = 1;
-
 
 while i < n    
         if box(i).Area > A
