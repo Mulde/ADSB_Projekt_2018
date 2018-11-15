@@ -11,7 +11,7 @@ figure
 Back = imread ('Back1.jpg');
 % Convert to Double data type
 Back = im2double(Back);
-Front = imread ('Multiple_pieces_2.jpg');
+Front = imread ('Multiple_pieces_2_2.jpg');
 Front = im2double(Front);
 
 %subtract the forground from the backround
@@ -26,12 +26,10 @@ mask = im2double(mask);
 % detmining if any element of the mask array is non zero
 mask = any (mask,3);
 %plotting the results
-subplot (1,2,1);
 mask = all(mask,3);
 imshow (mask);
 
 % use the mask to mark the changed area in the picture.
-subplot (1,2,2);
 box = regionprops(mask,'Area', 'BoundingBox'); 
 
 
@@ -109,7 +107,7 @@ while i < n
             X_offset = X-size(brik,2);
             
             hold on
-            p1 = [35+(150*(i-1)) 110];                  % First Point
+            p1 = [35+(150*(m-1)) 110];                  % First Point
             p2 = [X+1+(w/2) Y+1];                       % Second Point
             dp = p2-p1;                                 % Difference
             % Points from nomeric value to piece placement
